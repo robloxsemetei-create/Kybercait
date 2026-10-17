@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kyber Project — Создание сайтов и презентаций</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #0c0d10;
+      --bg-card: rgba(22, 24, 29, 0.75);
+      --border-glass: rgba(255, 255, 255, 0.08);
+      --text-primary: #f3f4f6;
+      --text-secondary: #9ca3af;
+      --radius: 20px;
+      --radius-btn: 14px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--bg-deep);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    .bg-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(circle at 20% 15%, rgba(255, 255, 255, 0.03), transparent 40%),
+        radial-gradient(circle at 80% 85%, rgba(100, 116, 139, 0.04), transparent 40%);
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Шапка */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(20px);
+      background: rgba(12, 13, 16, 0.85);
+      border-bottom: 1px solid var(--border-glass);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 76px;
+    }
+
+    /* Логотип с буквой K, кликабельный для входа в админку */
+    .logo {
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(145deg, #1f2229, #14161b);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.25rem;
+      color: var(--text-primary);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+      transition: transform 0.2s;
+    }
+
+    .logo:hover .logo-icon {
+      transform: scale(1.05);
+      border-color: rgba(255,255,255,0.3);
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-stylish {
+      width: 100%;
+      height: 46px;
+      padding: 0 20px;
+      border-radius: var(--radius-btn);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: linear-gradient(145deg, #1a1c23, #121318);
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+
+    .btn-stylish:hover {
+      border-color: rgba(255, 255, 255, 0.3);
+      background: linear-gradient(145deg, #232630, #16181f);
+      transform: translateY(-1px);
+    }
+
+    .btn-stylish:active {
+      transform: scale(0.98);
+    }
+
+    .header-btn {
+      width: auto;
+      height: 40px;
+      padding: 0 16px;
+      font-size: 0.85rem;
+    }
+
+    /* Герой */
+    .hero {
+      padding: 110px 0 80px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
+      border-radius: var(--radius-btn);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-glass);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      max-width: 800px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: var(--text-secondary);
+    }
+
+    .hero p {
+      color: var(--text-secondary);
+      font-size: 1.15rem;
+      max-width: 540px;
+      margin-bottom: 40px;
+    }
+
+    .hero-cta-wrapper {
+      width: 100%;
+      max-width: 320px;
+    }
+
+    /* Модальные окна */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(8, 9, 12, 0.85);
+      backdrop-filter: blur(12px);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      padding: 16px;
+    }
+
+    .modal-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      background: #16181d;
+      border: 1px solid var(--border-glass);
+      border-radius: 24px;
+      width: 100%;
+      max-width: 500px;
+      padding: 28px 24px 24px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6);
+      transform: translateY(20px) scale(0.96);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-overlay.active .modal-card {
+      transform: translateY(0) scale(1);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: transparent;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.25rem;
+      cursor: pointer;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+    }
+
+    .modal-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .modal-sub {
+      color: var(--text-secondary);
+      font-size: 0.88rem;
+      margin-bottom: 20px;
+    }
+
+    /* Формы */
+    .form-group {
+      margin-bottom: 14px;
+      text-align: left;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      height: 46px;
+      background: #0c0d10;
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-btn);
+      padding: 0 16px;
+      color: var(--text-primary);
+      font-size: 0.92rem;
+      font-family: inherit;
+      outline: none;
+    }
+
+    .form-group textarea {
+      height: 90px;
+      padding-top: 12px;
+      resize: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+
+    /* Переключатель вкладок в админке */
+    .admin-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .admin-tab-btn {
+      flex: 1;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--border-glass);
+      background: #0c0d10;
+      color: var(--text-secondary);
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .admin-tab-btn.active {
+      background: #3b82f6;
+      color: #fff;
+      border-color: #3b82f6;
+    }
+
+    /* ЧАТ */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: 340px;
+      background: #0c0d10;
+      border: 1px solid var(--border-glass);
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .chat-messages {
+      flex: 1;
+      padding: 14px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .message {
+      max-width: 80%;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-size: 0.88rem;
+      word-break: break-word;
+      line-height: 1.4;
+    }
+
+    /* Сообщение пользователя СПРАВА */
+    .message.client {
+      background: #3b82f6;
+      align-self: flex-end;
+      color: #ffffff;
+      border-bottom-right-radius: 4px;
+    }
+
+    /* Сообщение администратора СЛЕВА */
+    .message.admin {
+      background: #232630;
+      align-self: flex-start;
+      color: var(--text-primary);
+      border-bottom-left-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .chat-input-area {
+      display: flex;
+      align-items: center;
+      border-top: 1px solid var(--border-glass);
+      background: #121318;
+      height: 52px;
+      padding: 0 6px 0 12px;
+    }
+
+    .chat-input-area input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: var(--text-primary);
+      outline: none;
+      font-size: 0.9rem;
+      height: 100%;
+    }
+
+    /* Классическая стрелочка отправки */
+    .chat-send-btn {
+      width: 42px;
+      height: 42px;
+      background: #232630;
+      color: #ffffff;
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .chat-send-btn:hover {
+      background: #3b82f6;
+      border-color: #3b82f6;
+    }
+
+    .chat-send-btn:active {
+      transform: scale(0.92);
+    }
+
+    /* Списки в Админке */
+    .admin-list {
+      max-height: 360px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .admin-card {
+      background: #0c0d10;
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-btn);
+      padding: 16px;
+      text-align: left;
+    }
+
+    .admin-card h4 {
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .admin-card p {
+      font-size: 0.82rem;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .admin-actions {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    /* Плавающая кнопка чата */
+    .floating-chat-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      height: 48px;
+      padding: 0 20px;
+      background: linear-gradient(145deg, #1f2229, #14161b);
+      color: var(--text-primary);
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      cursor: pointer;
+      z-index: 90;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.2s;
+    }
+    .floating-chat-btn:hover { transform: scale(1.03); }
+
+    /* Toast Уведомления */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: #16181d;
+      border: 1px solid var(--border-glass);
+      border-radius: 12px;
+      padding: 12px 22px;
+      font-weight: 600;
+      font-size: 0.88rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      opacity: 0;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      z-index: 200;
+    }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    footer {
+      padding: 30px 0;
+      text-align: center;
+      border-top: 1px solid var(--border-glass);
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+      margin-top: 60px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-glow"></div>
+
+  <!-- Шапка (Клик по логотипу с буквой K открывает вход в админку) -->
+  <header>
+    <div class="container header-inner">
+      <div class="logo" onclick="openModal('adminLoginModal')" title="Нажмите для входа в админ-панель">
+        <div class="logo-icon">K</div>
+        Kyber Project
+      </div>
+      <div class="header-actions">
+        <button class="btn-stylish header-btn" onclick="openModal('contactsModal')">Контакты</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Главная страница -->
+  <main class="container">
+    <section class="hero">
+      <div class="hero-badge">✦ Цифровые решения под ключ</div>
+      <h1>Создание презентаций <span>и современных сайтов</span></h1>
+      <p>Разрабатываем уникальный дизайн, продуманную структуру и качественные проекты для ваших задач.</p>
+      <div class="hero-cta-wrapper">
+        <button class="btn-stylish" onclick="openModal('orderModal')">Сделать заказ</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Плавающая кнопка чата -->
+  <button class="floating-chat-btn" onclick="handleOpenChatClick()">
+    💬 Чат с поддержкой
+  </button>
+
+  <footer>
+    <div class="container">
+      © 2026 Kyber Project · Все права защищены
+    </div>
+  </footer>
+
+  <!-- Модалка: Авторизация в чате (Имя и номер телефона) -->
+  <div class="modal-overlay" id="chatAuthModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal('chatAuthModal')">&times;</button>
+      <div class="modal-title">Вход в чат</div>
+      <div class="modal-sub">Введите имя и номер телефона для связи</div>
+      
+      <form onsubmit="handleChatAuth(event)">
+        <div class="form-group">
+          <label>Ваше имя</label>
+          <input type="text" id="authName" placeholder="Например, Семетей" required>
+        </div>
+        <div class="form-group">
+          <label>Номер телефона</label>
+          <input type="tel" id="authPhone" placeholder="+996 (...)" required>
+        </div>
+        <button type="submit" class="btn-stylish">Начать чат</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Модалка: Оформить заказ -->
+  <div class="modal-overlay" id="orderModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal('orderModal')">&times;</button>
+      <div class="modal-title">Оформить заказ</div>
+      <div class="modal-sub">Заполните форму, и мы обсудим детали.</div>
+      
+      <form onsubmit="handleOrderSubmit(event)">
+        <div class="form-group">
+          <label>Услуга</label>
+          <select name="service">
+            <option value="Презентация">Создание презентации</option>
+            <option value="Сайт">Разработка сайта</option>
+            <option value="Другое">Другое / Комплекс</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Ваше имя</label>
+          <input type="text" name="name" placeholder="Ваше имя" required>
+        </div>
+        <div class="form-group">
+          <label>Контакт (Telegram / Discord)</label>
+          <input type="text" name="contact" placeholder="@username" required>
+        </div>
+        <div class="form-group">
+          <label>Описание задачи</label>
+          <textarea name="description" placeholder="Расскажите о проекте..."></textarea>
+        </div>
+        <button type="submit" class="btn-stylish">Отправить заявку</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Модалка: Контакты -->
+  <div class="modal-overlay" id="contactsModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal('contactsModal')">&times;</button>
+      <div class="modal-title">Наши контакты</div>
+      <div class="modal-sub">Свяжитесь напрямую:</div>
+      <div style="display:flex; flex-direction:column; gap:12px;">
+        <a href="https://t.me/KyberProject" target="_blank" class="btn-stylish" style="text-decoration:none;">Telegram: @KyberProject</a>
+        <a href="#" class="btn-stylish" style="text-decoration:none;">Discord: @sem4te1</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модалка: Вход в Админ-панель (по клику на логотип K) -->
+  <div class="modal-overlay" id="adminLoginModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal('adminLoginModal')">&times;</button>
+      <div class="modal-title">Админ-панель</div>
+      <div class="modal-sub">Введите секретный пароль</div>
+      
+      <form onsubmit="handleAdminLogin(event)">
+        <div class="form-group">
+          <label>Пароль</label>
+          <input type="password" id="adminPasswordInput" placeholder="Введите пароль" required>
+        </div>
+        <button type="submit" class="btn-stylish">Войти</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Модалка: Панель администратора с переключателем вкладок -->
+  <div class="modal-overlay" id="adminPanelModal">
+    <div class="modal-card" style="max-width: 540px;">
+      <button class="modal-close" onclick="closeModal('adminPanelModal')">&times;</button>
+      <div class="modal-title">⚡ Панель администратора</div>
+      <div class="modal-sub">Управление заказами и поддержкой</div>
+
+      <!-- Переключатель вкладок -->
+      <div class="admin-tabs">
+        <button class="admin-tab-btn active" id="tabBtnOrders" onclick="switchAdminTab('orders')">📦 Заказы клиентов</button>
+        <button class="admin-tab-btn" id="tabBtnChats" onclick="switchAdminTab('chats')">💬 Чаты поддержки</button>
+      </div>
+      
+      <!-- Вкладка 1: Заказы -->
+      <div class="admin-list" id="adminOrdersContainer">
+        <p style="color:var(--text-secondary); text-align:center; padding:20px;">Заказов пока нет.</p>
+      </div>
+
+      <!-- Вкладка 2: Чаты поддержки -->
+      <div class="admin-list" id="adminChatsContainer" style="display: none;">
+        <p style="color:var(--text-secondary); text-align:center; padding:20px;">Активных чатов поддержки пока нет.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модалка: Активный чат поддержки для клиента -->
+  <div class="modal-overlay" id="chatModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal('chatModal')">&times;</button>
+      <div class="modal-title" id="chatHeaderTitle">💬 Чат с поддержкой</div>
+      <div class="modal-sub" id="chatHeaderSub">Задайте вопрос в реальном времени.</div>
+      
+      <div class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+          <div class="message admin">Здравствуйте! Напишите нам, и мы ответим вам здесь.</div>
+        </div>
+        <div class="chat-input-area">
+          <input type="text" id="chatInput" placeholder="Ваше сообщение..." onkeydown="if(event.key==='Enter') sendClientMessage()">
+          <button class="chat-send-btn" onclick="sendClientMessage()" title="Отправить">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Модалка: Ответ Админа в чате поддержки конкретного пользователя -->
+  <div class="modal-overlay" id="adminChatReplyModal">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal('adminChatReplyModal')">&times;</button>
+      <div class="modal-title" id="adminChatReplyTitle">Чат с пользователем</div>
+      <div class="modal-sub" id="adminChatReplySub">Ответьте на сообщение клиента</div>
+      
+      <div class="chat-container">
+        <div class="chat-messages" id="adminChatMessages"></div>
+        <div class="chat-input-area">
+          <input type="text" id="adminChatInput" placeholder="Ответ администратора..." onkeydown="if(event.key==='Enter') sendAdminChatMessage()">
+          <button class="chat-send-btn" onclick="sendAdminChatMessage()" title="Отправить">➤</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">Уведомление</div>
+
+  <script>
+    let orders = [];
+    let supportChats = {}; // Ключ: phone, Значение: { name, phone, messages: [] }
+    let currentUser = null; // { name, phone }
+    let activeChatPhone = null; // Телефон клиента, с которым сейчас общается админ
+
+    function openModal(id) { document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+
+    document.querySelectorAll('.modal-overlay').forEach(overlay => {
+      overlay.addEventListener('click', (e) => {
+        if (e.target === overlay) overlay.classList.remove('active');
+      });
+    });
+
+    function showToast(text) {
+      const toast = document.getElementById('toast');
+      toast.innerText = text;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    }
+
+    // Клик по кнопке плавающего чата
+    function handleOpenChatClick() {
+      if (!currentUser) {
+        openModal('chatAuthModal');
+      } else {
+        openModal('chatModal');
+        renderClientChat();
+      }
+    }
+
+    // Авторизация пользователя для чата (Имя + Телефон)
+    function handleChatAuth(e) {
+      e.preventDefault();
+      const name = document.getElementById('authName').value.trim();
+      const phone = document.getElementById('authPhone').value.trim();
+      
+      if (!name || !phone) return;
+
+      currentUser = { name, phone };
+      
+      // Если такого чата еще нет, создаем
+      if (!supportChats[phone]) {
+        supportChats[phone] = {
+          name: name,
+          phone: phone,
+          messages: [
+            { sender: 'admin', text: `Здравствуйте, ${name}! Чем можем помочь?` }
+          ]
+        };
+      }
+
+      closeModal('chatAuthModal');
+      openModal('chatModal');
+      showToast(`Добро пожаловать, ${name}!`);
+      document.getElementById('chatHeaderSub').innerText = `Чат активен (${name})`;
+      renderClientChat();
+      updateAdminChatsList();
+    }
+
+    // Отправка заказа клиентом
+    function handleOrderSubmit(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const newOrder = {
+        id: Date.now(),
+        service: formData.get('service'),
+        name: formData.get('name'),
+        contact: formData.get('contact'),
+        description: formData.get('description'),
+        status: 'Новый'
+      };
+
+      orders.push(newOrder);
+      updateAdminOrders();
+      closeModal('orderModal');
+      showToast('Заказ успешно отправлен!');
+      e.target.reset();
+    }
+
+    // Вход в админку с паролем dodik
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const pass = document.getElementById('adminPasswordInput').value;
+      if (pass.toLowerCase() === 'dodik') {
+        closeModal('adminLoginModal');
+        openModal('adminPanelModal');
+        document.getElementById('adminPasswordInput').value = '';
+        showToast('Добро пожаловать в админ-панель!');
+        updateAdminOrders();
+        updateAdminChatsList();
+      } else {
+        showToast('Неверный пароль!');
+      }
+    }
+
+    // Переключение вкладок в админке
+    function switchAdminTab(tab) {
+      const btnOrders = document.getElementById('tabBtnOrders');
+      const btnChats = document.getElementById('tabBtnChats');
+      const containerOrders = document.getElementById('adminOrdersContainer');
+      const containerChats = document.getElementById('adminChatsContainer');
+
+      if (tab === 'orders') {
+        btnOrders.classList.add('active');
+        btnChats.classList.remove('active');
+        containerOrders.style.display = 'flex';
+        containerChats.style.display = 'none';
+      } else {
+        btnChats.classList.add('active');
+        btnOrders.classList.remove('active');
+        containerChats.style.display = 'flex';
+        containerOrders.style.display = 'none';
+      }
+    }
+
+    // Обновление списка заказов в админке
+    function updateAdminOrders() {
+      const container = document.getElementById('adminOrdersContainer');
+      if (orders.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-secondary); text-align:center; padding:20px;">Заказов пока нет.</p>';
+        return;
+      }
+
+      container.innerHTML = orders.map(order => `
+        <div class="admin-card">
+          <h4>📦 ${order.service} — ${order.name}</h4>
+          <p><strong>Контакт:</strong> ${order.contact}</p>
+          <p><strong>Задача:</strong> ${order.description}</p>
+          <p><strong>Статус:</strong> <span style="color: ${order.status === 'Принят' ? '#10b981' : '#f59e0b'}">${order.status}</span></p>
+          <div class="admin-actions">
+            ${order.status === 'Новый' ? `<button class="btn-stylish" style="height:34px; font-size:0.78rem;" onclick="acceptOrder(\${order.id})">Принять</button>` : '<span style="color:#10b981; font-size:0.8rem; font-weight:600; align-self:center;">✓ Принят</span>'}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function acceptOrder(id) {
+      const order = orders.find(o => o.id === id);
+      if (order) {
+        order.status = 'Принят';
+        updateAdminOrders();
+        showToast(`Заказ от ${order.name} принят!`);
+      }
+    }
+
+    // Обновление списка чатов в админке
+    function updateAdminChatsList() {
+      const container = document.getElementById('adminChatsContainer');
+      const phones = Object.keys(supportChats);
+
+      if (phones.length === 0) {
+        container.innerHTML = '<p style="color:var(--text-secondary); text-align:center; padding:20px;">Активных чатов поддержки пока нет.</p>';
+        return;
+      }
+
+      container.innerHTML = phones.map(phone => {
+        const chat = supportChats[phone];
+        const lastMsg = chat.messages[chat.messages.length - 1] ? chat.messages[chat.messages.length - 1].text : 'Нет сообщений';
+        return `
+          <div class="admin-card">
+            <h4>💬 ${chat.name}</h4>
+            <p><strong>Телефон:</strong> ${chat.phone}</p>
+            <p><strong>Последнее сообщение:</strong> ${lastMsg}</p>
+            <div class="admin-actions">
+              <button class="btn-stylish" style="height:34px; font-size:0.78rem;" onclick="openAdminChat('${phone}')">Открыть чат</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Клиент отправляет сообщение в чат поддержки
+    function sendClientMessage() {
+      const input = document.getElementById('chatInput');
+      const text = input.value.trim();
+      if (!text || !currentUser) return;
+
+      const chat = supportChats[currentUser.phone];
+      chat.messages.push({ sender: 'client', text: text });
+      input.value = '';
+      renderClientChat();
+      updateAdminChatsList();
+    }
+
+    function renderClientChat() {
+      if (!currentUser) return;
+      const chat = supportChats[currentUser.phone];
+      const container = document.getElementById('chatMessages');
+      container.innerHTML = chat.messages.map(msg => `
+        <div class="message ${msg.sender === 'client' ? 'client' : 'admin'}">${msg.text}</div>
+      `).join('');
+      container.scrollTop = container.scrollHeight;
+    }
+
+    // Админ открывает чат с конкретным пользователем
+    function openAdminChat(phone) {
+      activeChatPhone = phone;
+      const chat = supportChats[phone];
+      if (!chat) return;
+
+      document.getElementById('adminChatReplyTitle').innerText = `Чат с: ${chat.name}`;
+      document.getElementById('adminChatReplySub').innerText = `Телефон: ${chat.phone}`;
+      renderAdminChatMessages();
+      openModal('adminChatReplyModal');
+    }
+
+    // Админ отправляет сообщение из панели
+    function sendAdminChatMessage() {
+      const input = document.getElementById('adminChatInput');
+      const text = input.value.trim();
+      if (!text || !activeChatPhone) return;
+
+      const chat = supportChats[activeChatPhone];
+      chat.messages.push({ sender: 'admin', text: text });
+      input.value = '';
+      renderAdminChatMessages();
+      updateAdminChatsList();
+      showToast('Ответ отправлен клиенту!');
+
+      // Если клиент сейчас открыл этот же чат, обновим и его интерфейс
+      if (currentUser && currentUser.phone === activeChatPhone) {
+        renderClientChat();
+      }
+    }
+
+    function renderAdminChatMessages() {
+      if (!activeChatPhone) return;
+      const chat = supportChats[activeChatPhone];
+      const container = document.getElementById('adminChatMessages');
+      container.innerHTML = chat.messages.map(msg => `
+        <div class="message ${msg.sender === 'client' ? 'client' : 'admin'}">${msg.text}</div>
+      `).join('');
+      container.scrollTop = container.scrollHeight;
+    }
+  </script>
+</body>
+</html>
